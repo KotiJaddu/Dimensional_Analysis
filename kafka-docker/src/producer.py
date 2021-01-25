@@ -2,8 +2,7 @@ import messageQueues
 import sys
 
 topic = sys.argv[1]
-producer = messageQueues.generate_producer(topic)
-
+producer = messageQueues.generate_producer()
 while True:
 	if topic == "general_generator":
 		msg = input("Input dimensions: ")

@@ -1,12 +1,10 @@
 #!/usr/bin/python
 import sys
 import pandas as pd
-from kafka import KafkaConsumer
-import webbrowser
 from sympy import symbols, Matrix
 import io
 
-class Specific_Generator():
+class Model():
 	def generate(self, points):
 		dimension_x = points.shape[0] - 1
 		dimension_y = points.shape[1]
@@ -99,16 +97,3 @@ class Specific_Generator():
 				f.close()
 		output = output + "</p>\n</body>\n</html>"
 		return output
-
-if __name__ == '__main__':
-	specific_generator_consumer = KafkaConsumer('specific_generator', bootstrap_servers='localhost:55001', auto_offset_reset='earliest')
-	for msg in specific_generator_consumer:
-			msg_string = msg.value.decode('utf-8')
-			manipulated_msg_string = msg_string.replace(";", "\n")
-			data = io.StringIO("""""" + manipulated_msg_string + """""")
-			df = pd.read_csv(data, sep=",", header=None)
-			specific_generator = Specific_Generator()
-			f = open("specific_generator.html", "w")
-			f.write(specific_generator.generate(df))
-			f.close()
-			webbrowser.open("C:\\Users\\kjaddu001\\Desktop\\kafka-docker\\src\\specific_generator.html",new=2)
