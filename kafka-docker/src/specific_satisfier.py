@@ -4,6 +4,9 @@ import pandas as pd
 from sympy import symbols, Matrix
 import io
 
+# This class is too long and not tested. We need to write down in sentences what this class does and translate the  words into
+# unit tests so that we can refactor this class.
+
 class Model():
 	def generate(self, points):
 		dimension_x = points.shape[0] - 2
@@ -33,11 +36,11 @@ class Model():
 					if (i == 0):
 						output = output + "A_{" + str(i) + "}"
 					else:
-						output = output + ", A_{" + str(i) + "}"    
+						output = output + ", A_{" + str(i) + "}"
 			else:
 				output = output + "A_0, ..., A_{" + str(dimension_y - 1) + "}"
 		output = output + ")\\]\nin " + dimension_ys + "D space lies on the " + dimension_xs + "D object defined by the point(s)\n"
-		
+
 		if (dimension_y >= 4 and dimension_x == 1):
 			output = output + "\\[(\\alpha_{0,0},...,\\alpha_{0," + str(dimension_y - 1) + "}), (\\alpha_{" + dimension_xs + ",0},...,\\alpha_{" + dimension_xs + "," + str(dimension_y - 1) + "}) "
 		else:

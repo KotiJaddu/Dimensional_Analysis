@@ -4,6 +4,9 @@ import pandas as pd
 from sympy import symbols, Matrix
 import io
 
+# This class is too long and not tested. We need to write down in sentences what this class does and translate the  words into
+# unit tests so that we can refactor this class.
+
 def determinant(matrix):
 	dimension = len(matrix)
 	if (dimension == 1):
@@ -30,7 +33,7 @@ def determinant(matrix):
 				output += " - "
 		output += "(" + matrix[0][k] + ")[" + determinant(new_matrix) + "]\n"
 	return output
-                        
+
 
 class Model():
 	def generate(self, dimension_x, dimension_y):
@@ -60,11 +63,11 @@ class Model():
 					if (i == 0):
 						output = output + "A_{" + str(i) + "}"
 					else:
-						output = output + ", A_{" + str(i) + "}"    
+						output = output + ", A_{" + str(i) + "}"
 			else:
 				output = output + "A_0, ..., A_{" + str(dimension_y - 1) + "}"
 		output = output + ")\\]\nin " + dimension_ys + "D space lies on the " + dimension_xs + "D object defined by the point(s)\n"
-		
+
 		if (dimension_y >= 4 and dimension_x == 1):
 			output = output + "\\[(\\alpha_{0,0},...,\\alpha_{0," + str(dimension_y - 1) + "}), (\\alpha_{" + dimension_xs + ",0},...,\\alpha_{" + dimension_xs + "," + str(dimension_y - 1) + "}) "
 		else:
@@ -88,7 +91,7 @@ class Model():
 		if (dimension_x + 1 == dimension_y):
 			output = output + "Equation 1 to be satisfied:\n"
 			output = output + "\\[" + determinant(matrix) + "= 0\\]\n</p>\n</body>\n</html>"
-			
+
 		else:
 			output = output + "Equation 1 to be satisfied:\n"
 			new_matrix = [0] * (dimension_x + 1)
