@@ -1,12 +1,13 @@
-import messageQueues
+import KafkaComponents
 import sys
 import pandas as pd
 import specific_generator, general_generator, specific_generator
 import io
 import webbrowser
+import os
 
 topic = sys.argv[1]
-consumer = messageQueues.generate_consumer(topic)
+consumer = KafkaComponents.generate_consumer(topic)
 for msg in consumer:
 	msg_string = msg.value.decode('utf-8')
 	manipulated_msg_string = msg_string.replace(";", "\n")
@@ -20,4 +21,4 @@ for msg in consumer:
 	elif (topic == "specific_satisfier"):
 		f.write(specific_satisfier.Model().generate(df))
 	f.close()
-	webbrowser.open("C:\\Users\\kjaddu001\\Documents\\Github\\Dimensional_Analysis\\kafka-docker\\src\\generator.html",new=2)
+	webbrowser.open(os.path.abspath("generator.html"), new=2)

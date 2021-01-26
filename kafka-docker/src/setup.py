@@ -1,5 +1,8 @@
 import subprocess
 
+def get_PORT():
+	return str(subprocess.check_output(['docker-compose', 'ps'], shell=True)).split(':')[1].split('-')[0]
+
 IP_ADDRESS = str(subprocess.check_output(['ipconfig'], shell=True)).split(':')[3].split('\\')[0].split(' ')[1]
 reading_file = open("../docker-compose.yml", "r")
 

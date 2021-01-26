@@ -1,8 +1,8 @@
-import messageQueues
+import KafkaComponents
 import sys
 
 topic = sys.argv[1]
-producer = messageQueues.generate_producer()
+producer = KafkaComponents.generate_producer()
 while True:
 	if topic == "general_generator":
 		msg = input("Input dimensions: ")
