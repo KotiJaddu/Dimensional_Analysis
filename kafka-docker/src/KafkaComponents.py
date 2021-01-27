@@ -9,9 +9,9 @@ import subprocess
 # you created a file called setup.py -> does get_port fit to this module? -- MOVED
 
 def generate_producer():
-  producer = KafkaProducer(bootstrap_servers='localhost:' + get_PORT())
+  producer = KafkaProducer(bootstrap_servers='localhost:' + setup.get_PORT())
   return producer
 
 def generate_consumer(topic):
-  consumer = KafkaConsumer(topic, bootstrap_servers='localhost:' + get_PORT(), auto_offset_reset='earliest')
+  consumer = KafkaConsumer(topic, bootstrap_servers='localhost:' + setup.get_PORT(), auto_offset_reset='earliest')
   return consumer

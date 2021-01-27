@@ -12,18 +12,15 @@ class Model():
 	def generate(self, points):
 		dimension_x = points.shape[0] - 1
 		dimension_y = points.shape[1]
-		matrix = helper_functions.Initialise_Matrix(dimension_x + 1, dimension_y)
+		matrix = helper_functions.generate_null_matrix(dimension_x + 1, dimension_y)
+		matrix = helper_functions.initialise_matrix_specific_generator(matrix, points, dimension_x, dimension_y)
 
-		for i in range(0, dimension_y):
-			matrix[0][i] = symbols('A_0:' + str(dimension_y))[i] - float(points[i][0])
-			for j in range(1, dimension_x + 1):
-				matrix[j][i] = float(points[i][j]) - float(points[i][0])
-
-		output = helper_functions.Headers()
-		output = helper_functions.Introduction(output, dimension_x, dimension_y)
+		output = helper_functions.generate_html_header()
+		output = helper_functions.generate_definitions_and_variables(output, dimension_x, dimension_y)
 
 		if (dimension_x + 1 == dimension_y):
-			output = helper_functions.Equation_Output_Case1(output, helper_functions.Determinant_Read(matrix))
+			output = helper_functions.generate_equation_output_case_1(output, helper_functions.generate_determinant_as_string(matrix))
 		else:
-			output = helper_functions.Equation_Output_Case2(output, matrix, False, helper_functions.Determinant_Read, dimension_x, dimension_y)
-		return output + "</p>\n</body>\n</html>"
+			output = helper_functions.generate_equation_output_case_2(output, matrix, False, helper_functions.generate_determinant_as_string, dimension_x, dimension_y)
+		output = helper_functions.generate_html_footer(output)
+		return output
