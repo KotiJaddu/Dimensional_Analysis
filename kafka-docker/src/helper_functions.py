@@ -38,57 +38,43 @@ def generate_definitions_and_variables(output, dimension_x, dimension_y):
 	return output
 
 def generate_spacial_definition(output, dimension_x, dimension_y):
-	dimension_xs = str(dimension_x)
-	dimension_ys = str(dimension_y)
 
 	# TODO: Find a better solution to get around this IF statement.
 	if (dimension_x + 1 == dimension_y):
-		output = output + "To represent a " + dimension_xs + "D object in " + dimension_ys + "D space, there is only one equation that needs to be satisfied in order to check whether the point\n\\[("
+		output = output + "To represent a " + str(dimension_x) + "D object in " + str(dimension_y) + "D space, there is only one equation that needs to be satisfied in order to check whether the point\n\\[("
 	else:
-		output = output + "To represent a " + dimension_xs + "D object in " + dimension_ys + "D space, there are " + str(dimension_y - dimension_x) + " equations that need to be satisfied in order to check whether the point\n\\[("
+		output = output + "To represent a " + str(dimension_x) + "D object in " + str(dimension_y) + "D space, there are " + str(dimension_y - dimension_x) + " equations that need to be satisfied in order to check whether the point\n\\[("
 	return output
 
 def generate_spacial_variables(output, dimension_x, dimension_y):
-	dimension_xs = str(dimension_x)
-	dimension_ys = str(dimension_y)
-	if (dimension_y == 1):
+	if (dimension_y < 4):
 		output = output + "A_{0}"
+		for i in range(1, dimension_y):
+			output = output + ", A_{" + str(i) + "}"
 	else:
-		if (dimension_y < 4):
-			for i in range(0, dimension_y):
-				if (i == 0):
-					output = output + "A_{" + str(i) + "}"
-				else:
-					output = output + ", A_{" + str(i) + "}"
-		else:
-			output = output + "A_0, ..., A_{" + str(dimension_y - 1) + "}"
+		output = output + "A_0, ..., A_{" + str(dimension_y - 1) + "}"
 	return output
 
 def generate_object_definition(output, dimension_x, dimension_y):
 	return output + ")\\]\nin " + str(dimension_y) + "D space lies on the " + str(dimension_x) + "D object defined by the point(s)\n"
 
 def generate_object_variables(output, dimension_x, dimension_y):
-	dimension_xs = str(dimension_x)
-	dimension_ys = str(dimension_y)
+
 	if (dimension_y >= 4 and dimension_x == 1):
-		output = output + "\\[(\\alpha_{0,0},...,\\alpha_{0," + str(dimension_y - 1) + "}), (\\alpha_{" + dimension_xs + ",0},...,\\alpha_{" + dimension_xs + "," + str(dimension_y - 1) + "}) "
+		output = output + "\\[(\\alpha_{0,0},...,\\alpha_{0," + str(dimension_y - 1) + "}), (\\alpha_{" + str(dimension_x) + ",0},...,\\alpha_{" + str(dimension_x) + "," + str(dimension_y - 1) + "}) "
 	else:
 		if (dimension_y < 4):
-			output = output + "\\["
+			output = output + "\\[("
 			for i in range(0, dimension_x + 1):
-				if (i == 0):
-					output = output + "("
-				else:
+				if (i > 0):
 					output = output + ", ("
-				for j in range(0, dimension_y):
-					if (j == 0):
-						output = output + "\\alpha_{" + str(i) + "," + str(j) + "}"
-					else:
-						output = output + ", \\alpha_{" + str(i) + "," + str(j) + "}"
+				output = output + "\\alpha_{" + str(i) + ",0}"
+				for j in range(1, dimension_y):
+					output = output + ", \\alpha_{" + str(i) + "," + str(j) + "}"
 				output = output + ")"
 		else:
-			output = output + " \\[(\\alpha_{0,0},...,\\alpha_{0," + str(dimension_y - 1) + "}), ..., (\\alpha_{" + dimension_xs + ",0},...,\\alpha_{" + dimension_xs + "," + str(dimension_y - 1) + "})"
-	return output + "\\] which all lie on that " + dimension_xs + "D object.<br><br>\n"
+			output = output + " \\[(\\alpha_{0,0},...,\\alpha_{0," + str(dimension_y - 1) + "}), ..., (\\alpha_{" + str(dimension_x) + ",0},...,\\alpha_{" + str(dimension_x) + "," + str(dimension_y - 1) + "})"
+	return output + "\\] which all lie on that " + str(dimension_x) + "D object.<br><br>\n"
 
 def generate_determinant_as_string(matrix):
 	with open('determinant.txt', 'w') as f:
@@ -115,10 +101,10 @@ def generate_determinant(matrix):
 					if (fill_y % dimension == dimension - 1):
 						fill_y = 0;
 						fill_x = fill_x + 1
-		if (k != 0):
-			if (k % 2 == 0):
+		if (k > 0):
+			if (k % 2 == 0 and k > 0):
 				output += " + "
-			else:
+			elif (k % 2 == 1 and k > 0):
 				output += " - "
 		output += "(" + matrix[0][k] + ")[" + generate_determinant(new_matrix) + "]\n"
 	return output
