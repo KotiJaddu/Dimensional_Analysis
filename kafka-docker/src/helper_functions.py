@@ -102,9 +102,9 @@ def generate_determinant(matrix):
 						fill_y = 0;
 						fill_x = fill_x + 1
 		if (k > 0):
-			if (k % 2 == 0 and k > 0):
+			if (k % 2 == 0):
 				output += " + "
-			elif (k % 2 == 1 and k > 0):
+			elif (k % 2 == 1):
 				output += " - "
 		output += "(" + matrix[0][k] + ")[" + generate_determinant(new_matrix) + "]\n"
 	return output
