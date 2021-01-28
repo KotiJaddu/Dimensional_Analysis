@@ -8,7 +8,7 @@ import helper_functions
 # unit tests so that we can refactor this class.
 
 class Model():
-	def generate(self, points):
+	def generate_dimensional_analysis_html_script(self, points):
 		dimension_x = points.shape[0] - 2
 		dimension_y = points.shape[1]
 		matrix = helper_functions.generate_null_matrix(dimension_x + 1, dimension_y)

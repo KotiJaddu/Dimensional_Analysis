@@ -66,10 +66,10 @@ class TestHelperFunctions(unittest.TestCase):
 		self.assertNotEqual("", helper_functions.generate_spacial_definition("", 1, 2) == "To represent a 1D object in 2D space, there is only one equation that needs to be satisfied in order to check whether the point\n\\[(")
 			
 	def test_generate_spacial_variables_should_get_correct_description_based_on_dimensions(self):
-		assert helper_functions.generate_spacial_variables("", 1, 2) == "A_{0}, A_{1}"
+		assert helper_functions.generate_spacial_variables_for_display("", 1, 2) == "A_{0}, A_{1}"
 
 	def test_generate_spacial_variables_should_not_get_correct_description_based_on_dimensions(self):
-		self.assertNotEqual("", helper_functions.generate_spacial_variables("", 2, 4))
+		self.assertNotEqual("", helper_functions.generate_spacial_variables_for_display("", 2, 4))
 
 	def test_generate_object_definition_should_get_correct_string_based_on_dimensions(self):
 		assert helper_functions.generate_object_definition("", 1, 2) == ")\\]\nin 2D space lies on the 1D object defined by the point(s)\n"
@@ -78,10 +78,10 @@ class TestHelperFunctions(unittest.TestCase):
 		self.assertNotEqual("", helper_functions.generate_object_definition("", 1, 4))
 	
 	def test_generate_object_variables_should_get_correct_description_based_on_dimensions(self):
-		assert helper_functions.generate_object_variables("", 1, 2) == "\\[(\\alpha_{0,0}, \\alpha_{0,1}), (\\alpha_{1,0}, \\alpha_{1,1})\\] which all lie on that 1D object.<br><br>\n"
+		assert helper_functions.generate_object_variables_for_display("", 1, 2) == "\\[(\\alpha_{0,0}, \\alpha_{0,1}), (\\alpha_{1,0}, \\alpha_{1,1})\\] which all lie on that 1D object.<br><br>\n"
 
 	def test_generate_object_variables_should_not_get_correct_description_based_on_dimensions(self):
-		self.assertNotEqual("", helper_functions.generate_object_variables("", 2, 3))
+		self.assertNotEqual("", helper_functions.generate_object_variables_for_display("", 2, 3))
 
 	def test_generate_definitions_and_variables_should_get_correct_description_based_on_dimensions(self):
 		assert helper_functions.generate_definitions_and_variables("", 3, 5) == "To represent a 3D object in 5D space, there are 2 equations that need to be satisfied in order to check whether the point\n\\[(A_0, ..., A_{4})\\]\nin 5D space lies on the 3D object defined by the point(s)\n \\[(\\alpha_{0,0},...,\\alpha_{0,4}), ..., (\\alpha_{3,0},...,\\alpha_{3,4})\\] which all lie on that 3D object.<br><br>\n"

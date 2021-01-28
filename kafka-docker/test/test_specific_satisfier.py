@@ -10,7 +10,7 @@ import specific_satisfier
 def test_me(index, points):
 	test_file = open("test_data/specific_satisfier/specific_satisfier_test" + str(index) + ".html", "r")
 	df = pd.read_csv(io.StringIO("""""" + points.replace(";", "\n") + """"""), sep=",", header=None)
-	assert test_file.read() == specific_satisfier.Model().generate(df)
+	assert test_file.read() == specific_satisfier.Model().generate_dimensional_analysis_html_script(df)
 	test_file.close()
 
 

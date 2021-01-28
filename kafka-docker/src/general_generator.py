@@ -10,7 +10,10 @@ import helper_functions
 
 
 class Model():
-	def generate(self, dimension_x, dimension_y):
+	def generate_dimensional_analysis_html_script(self, dimension_x, dimension_y):
+		#with open('../src/storage/' + str(dimension_x) + '_' + str(dimension_y) + '.txt') as f:
+		#	matrix = f.read()
+		#	matrix = list(matrix)
 		matrix = helper_functions.generate_null_matrix(dimension_x + 1, dimension_y)
 		matrix = helper_functions.initialise_matrix_general_generator(matrix, dimension_x, dimension_y)
 
