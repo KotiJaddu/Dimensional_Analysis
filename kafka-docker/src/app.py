@@ -35,6 +35,7 @@ def write_to_file(text):
     f.write(text)
     f.close()
     webbrowser.open(os.path.abspath("generator.html"), new=2)
+    return app.send_static_file('upload.html')
 
 
 
@@ -47,17 +48,14 @@ def Dimensions_AnalysisResource():
         form_list_keys = list(form.keys())
         if ("General" in form_list_keys):
             if (check(form["odim"]) and check(form["sdim"]) and int(form["odim"]) < int(form["sdim"])):
-                write_to_file(general_generator.Model().generate_dimensional_analysis_html_script(int(form["odim"]), int(form["sdim"])))
-                return app.send_static_file('upload.html')
-            return "Invalid Parameters"
+                return write_to_file(general_generator.Model().generate_dimensional_analysis_html_script(int(form["odim"]), int(form["sdim"])))
+            return write_to_file("Invalid Parameters")
         file = request.files.getlist("file")[0]
         fname = secure_filename(file.filename)
         file.save(fname)
         if ("Specific" in form_list_keys):
-            write_to_file(specific_generator.Model().generate_dimensional_analysis_html_script(pd.read_csv(fname, sep=",", header=None)))
-            return app.send_static_file('upload.html')
-        write_to_file(specific_satisfier.Model().generate_dimensional_analysis_html_script(pd.read_csv(fname, sep=",", header=None)))
-        return app.send_static_file('upload.html')
+            return write_to_file(specific_generator.Model().generate_dimensional_analysis_html_script(pd.read_csv(fname, sep=",", header=None)))
+        return write_to_file(specific_satisfier.Model().generate_dimensional_analysis_html_script(pd.read_csv(fname, sep=",", header=None)))
 
 if __name__ == '__main__':
     app.run()
