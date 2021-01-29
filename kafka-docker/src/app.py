@@ -3,12 +3,15 @@ from werkzeug.utils import secure_filename
 import general_generator
 import specific_generator
 import specific_satisfier
+import default_display
 import KafkaComponents
 import webbrowser
 import os
 import pandas as pd 
 
 app = Flask(__name__)
+MAX_DEFAULT_MATRIX_LENGTH = 7
+default_matrices = default_display.generate_default_matrices_general_generator(MAX_DEFAULT_MATRIX_LENGTH, MAX_DEFAULT_MATRIX_LENGTH)
 
 def check(value):
     try:
@@ -38,24 +41,27 @@ def write_to_file(text):
     return app.send_static_file('upload.html')
 
 
+@app.route("/dimensional_analysis", methods=["GET"])
+def get_dimensional_analysis():
+    return app.send_static_file('upload.html')
 
-@app.route("/dimensional_analysis", methods=["GET","POST"])
-def Dimensions_AnalysisResource():
-    if request.method == "GET":
-        return app.send_static_file('upload.html')
-    else:
-        form = request.form.to_dict()
-        form_list_keys = list(form.keys())
-        if ("General" in form_list_keys):
-            if (check(form["odim"]) and check(form["sdim"]) and int(form["odim"]) < int(form["sdim"])):
-                return write_to_file(general_generator.Model().generate_dimensional_analysis_html_script(int(form["odim"]), int(form["sdim"])))
-            return write_to_file("Invalid Parameters")
+
+@app.route("/dimensional_analysis", methods=["POST"])
+def post_dimensional_analysis():
+    form = request.form.to_dict()
+    form_list_keys = list(form.keys())
+    if ("General" in form_list_keys):
+        if (check(form["odim"]) and check(form["sdim"]) and int(form["odim"]) < int(form["sdim"])):
+            return general_generator.Model().generate_dimensional_analysis_html_script(int(form["odim"]), int(form["sdim"]), default_matrices, MAX_DEFAULT_MATRIX_LENGTH)
+        return "Invalid Parameters"
+    if (len(request.files.getlist("file")) > 0):
         file = request.files.getlist("file")[0]
         fname = secure_filename(file.filename)
         file.save(fname)
         if ("Specific" in form_list_keys):
-            return write_to_file(specific_generator.Model().generate_dimensional_analysis_html_script(pd.read_csv(fname, sep=",", header=None)))
-        return write_to_file(specific_satisfier.Model().generate_dimensional_analysis_html_script(pd.read_csv(fname, sep=",", header=None)))
+            return specific_generator.Model().generate_dimensional_analysis_html_script(pd.read_csv(fname, sep=",", header=None))
+        return specific_satisfier.Model().generate_dimensional_analysis_html_script(pd.read_csv(fname, sep=",", header=None))
+    return "Invalid Parameters"
 
 if __name__ == '__main__':
     app.run()

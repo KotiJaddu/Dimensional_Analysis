@@ -14,11 +14,11 @@ specific_satisfier_parameters = [[1,"0;9"],[2,"1,2;1,2"],[3,"1,2;3,4"],[4,"1,3,4
 def write_to_file(file, type, obj1, obj2):
 	test_file = open(file, "w")
 	if type == 0:
-		test_file.write(general_generator.Model().generate(obj1, obj2))
+		test_file.write(general_generator.Model().generate_dimensional_analysis_html_script(obj1, obj2, None, 0))
 	elif type == 1:
-		test_file.write(specific_generator.Model().generate(obj1))
+		test_file.write(specific_generator.Model().generate_dimensional_analysis_html_script(obj1))
 	elif type == 2:
-		test_file.write(specific_satisfier.Model().generate(obj1))
+		test_file.write(specific_satisfier.Model().generate_dimensional_analysis_html_script(obj1))
 	test_file.close()
 
 for i in range(len(general_generator_parameters)):	

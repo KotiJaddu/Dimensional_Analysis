@@ -1,11 +1,11 @@
 import KafkaComponents
 import sys
 import pandas as pd
-import specific_generator, general_generator, specific_generator
+import specific_generator, general_generator, specific_generator, default_matrices
 import io
 import webbrowser
 import os
-
+default_matrices = default_display.generate_default_matrices_general_generator(4, 5)
 topic = sys.argv[1]
 consumer = KafkaComponents.generate_consumer(topic)
 for msg in consumer:
@@ -15,7 +15,7 @@ for msg in consumer:
 	f = open("generator.html", "w")
 	if (topic == "general_generator"):
 		split_msg = msg_string.split(',')
-		f.write(general_generator.Model().generate(int(split_msg[0]), int(split_msg[1])))
+		f.write(general_generator.Model().generate(int(split_msg[0]), int(split_msg[1])), )
 	elif (topic == "specific_generator"):
 		f.write(specific_generator.Model().generate(df))
 	elif (topic == "specific_satisfier"):

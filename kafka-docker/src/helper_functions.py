@@ -103,14 +103,14 @@ def generate_equation_output_case_1(output, matrix):
 
 def generate_equation_output_case_2(output, matrix, type, determinant, dimension_x, dimension_y):
 	new_matrix = copy_array(matrix, generate_null_matrix(dimension_x + 1, dimension_x + 1), dimension_x + 1)
-	output += "Equation 1 to be satisfied:\n\\[" + get_determinant(type, matrix, new_matrix, determinant) + "= 0\\]\n"
+	output += "Equation 1 to be satisfied:\n\\[" + determinant(new_matrix) + "= 0\\]\n"
 	for i in range(dimension_y - dimension_x - 1):
 		new_matrix = generate_null_matrix(dimension_x + 1, dimension_x + 1)
 		if (dimension_x > 0):
 			new_matrix = copy_array_reverse(matrix, new_matrix, dimension_x + 1)
 		for j in range(dimension_x + 1):
 			new_matrix[j][0] = matrix[j][dimension_y - i - 1]
-		output += "<br>Equation " + str(i + 2) + " to be satisfied:\n\\[" + get_determinant(type, matrix, new_matrix, determinant) + "= 0\\]\n"
+		output += "<br>Equation " + str(i + 2) + " to be satisfied:\n\\[" + determinant(new_matrix) + "= 0\\]\n"
 	return output
 
 def generate_html_footer(output):
@@ -135,7 +135,10 @@ def k_modulo_2(output, k):
 		return output + " - "
 	return output
 
-def get_determinant(type, matrix, new_matrix, determinant):
-	if (type):
-		return determinant(matrix)
-	return determinant(new_matrix)
+def check_default_matrices(matrix, default_matrices, dimension_x, dimension_y, MAX_DEFAULT_MATRIX_LENGTH):
+	if (dimension_y <= MAX_DEFAULT_MATRIX_LENGTH):
+		index = -1
+		for i in range(dimension_x):
+			index += MAX_DEFAULT_MATRIX_LENGTH - i
+		return default_matrices[index + dimension_y - dimension_x]
+	return initialise_matrix_general_generator(matrix, dimension_x, dimension_y)
