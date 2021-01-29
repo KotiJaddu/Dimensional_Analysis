@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head><title>Dimensional Analysis</title></head>
+​
+    <body>
+        <h1>Dimensional Analysis</h1>
+        <h2>General Formula Generator</h2>
+        <form method="POST">
+          <label for="odim">Object's Dimension:</label><br>
+          <input type="text" id="odim" name="odim"><br><br>
+          <label for="sdim">Spacial Dimension:</label><br>
+          <input type="text" id="sdim" name="sdim"><br><br>
+          <input type="submit" value="Submit" name="General">
+        </form>
+        <h2>Specific Formula Generator</h2>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" />
+            <input type="submit" value="Upload File" name="Specific" />
+        </form>
+         <div id="result1">
+            <p>Waiting for upload...</p>
+        </div>
+        <h2> Satisfy Specific Formula Checker</h2>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" />
+            <input type="submit" value="Upload File" name="Specific_Satisfier" />
+        </form>
+         <div id="result2">
+            <p>Waiting for upload...</p>
+        </div>
+        
+    </body>
+ 
+    <script>
+        const url = "/dimensional_analysis";
+        const form = document.querySelector("form");
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            
+            const files = document.querySelector('[type=file]').files;
+            const formData = new FormData();
+            for (const f of files) {
+                formData.append('file', f);
+            }
+​
+            fetch(url, {
+                method: 'POST',
+                body: formData,
+            }).then((res) => res.json()).then(data => {
+                alert(`result is: ${data["result"]}`);
+            })
+​
+        })
+    </script>
+
+</html>

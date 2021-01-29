@@ -12,6 +12,8 @@ class Model():
 	def generate_dimensional_analysis_html_script(self, points):
 		dimension_x = points.shape[0] - 1
 		dimension_y = points.shape[1]
+		if (dimension_y <= dimension_x):
+			return "Invalid File"
 		matrix = helper_functions.generate_null_matrix(dimension_x + 1, dimension_y)
 		matrix = helper_functions.initialise_matrix_specific_generator(matrix, points, dimension_x, dimension_y)
 
@@ -20,7 +22,6 @@ class Model():
 
 		if (dimension_x + 1 == dimension_y):
 			output = helper_functions.generate_equation_output_case_1(output, helper_functions.generate_determinant_as_string(matrix))
-		else:
-			output = helper_functions.generate_equation_output_case_2(output, matrix, False, helper_functions.generate_determinant_as_string, dimension_x, dimension_y)
-		output = helper_functions.generate_html_footer(output)
-		return output
+			return helper_functions.generate_html_footer(output)
+		output = helper_functions.generate_equation_output_case_2(output, matrix, False, helper_functions.generate_determinant_as_string, dimension_x, dimension_y)
+		return helper_functions.generate_html_footer(output)

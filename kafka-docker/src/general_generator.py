@@ -22,9 +22,8 @@ class Model():
 
 		if (dimension_x + 1 == dimension_y):
 			output = helper_functions.generate_equation_output_case_1(output, helper_functions.generate_determinant(matrix))
-		else:
-			output = helper_functions.generate_equation_output_case_2(output, matrix, True, helper_functions.generate_determinant, dimension_x, dimension_y)
-		output = helper_functions.generate_html_footer(output)
-		return output
+			return helper_functions.generate_html_footer(output)
+		output = helper_functions.generate_equation_output_case_2(output, matrix, True, helper_functions.generate_determinant, dimension_x, dimension_y)
+		return helper_functions.generate_html_footer(output)
 
 
