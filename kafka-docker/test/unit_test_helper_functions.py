@@ -142,7 +142,7 @@ class TestHelperFunctions(unittest.TestCase):
 	def test_generate_equation_output_case_2_should_get_correct_equations_for_general_generator(self):
 		matrix = helper_functions.generate_null_matrix(1, 2)
 		matrix = helper_functions.initialise_matrix_general_generator(matrix, 0, 2)
-		assert helper_functions.generate_equation_output_case_2("", matrix, True, helper_functions.generate_determinant, 0, 2) == "Equation 1 to be satisfied:\n\\[A_{0} - \\alpha_{0,0}= 0\\]\n<br>Equation 2 to be satisfied:\n\\[A_{0} - \\alpha_{0,0}= 0\\]\n"
+		assert helper_functions.generate_equation_output_case_2("", matrix, True, helper_functions.generate_determinant, 0, 2) == "Equation 1 to be satisfied:\n\\[A_{0} - \\alpha_{0,0}= 0\\]\n<br>Equation 2 to be satisfied:\n\\[A_{1} - \\alpha_{0,1}= 0\\]\n"
 	
 	def test_generate_equation_output_case_2_should_get_incorrect_equations_for_general_generator(self):
 		matrix = helper_functions.generate_null_matrix(1, 2)

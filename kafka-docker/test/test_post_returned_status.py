@@ -1,11 +1,74 @@
+import os
 import sys
-import pytest
-import subprocess
+PROJECT_PATH = os.getcwd()
+SOURCE_PATH = os.path.join(
+    PROJECT_PATH,"src"
+)
+sys.path.append(SOURCE_PATH)
+from app import app
+import unittest
 
-@pytest.mark.parametrize('X, Y', [[0,1],[0,2],[1,2],[1,3],[1,4],[2,3],[2,4],[2,6],[2,7],[3,8],[3,5],[3,6],[4,6],[4,7],[4,8]])
-def test_me(X, Y):
-	assert "200" == subprocess.run("curl -i -XPOST localhost:5000/dimensional_analysis -d odim=" + str(X) + " -d sdim=" + str(Y) + " -d General=Submit", capture_output=True, shell=True, encoding="utf8").stdout.split()[1]
 
-'''
-py.test --tb=short test_post_returned_status.py
-'''
+class TestDataSuccessStatusCode(unittest.TestCase):
+	def test_post_data_valid_parameters_returns_200_with_parameters_0_1(self):
+		response = app.test_client().post('/dimensional_analysis', data=dict(odim="0", sdim="1", General="Submit"))
+		self.assertEqual(response.status_code, 200)
+
+	def test_post_data_valid_parameters_returns_200_with_parameters_0_2(self):
+		response = app.test_client().post('/dimensional_analysis', data=dict(odim="0", sdim="2", General="Submit"))
+		self.assertEqual(response.status_code, 200)
+
+	def test_post_data_valid_parameters_returns_200_with_parameters_1_2(self):
+		response = app.test_client().post('/dimensional_analysis', data=dict(odim="1", sdim="2", General="Submit"))
+		self.assertEqual(response.status_code, 200)
+
+	def test_post_data_valid_parameters_returns_200_with_parameters_1_3(self):
+		response = app.test_client().post('/dimensional_analysis', data=dict(odim="1", sdim="3", General="Submit"))
+		self.assertEqual(response.status_code, 200)
+
+	def test_post_data_valid_parameters_returns_200_with_parameters_1_4(self):
+		response = app.test_client().post('/dimensional_analysis', data=dict(odim="1", sdim="4", General="Submit"))
+		self.assertEqual(response.status_code, 200)
+
+	def test_post_data_valid_parameters_returns_200_with_parameters_2_3(self):
+		response = app.test_client().post('/dimensional_analysis', data=dict(odim="2", sdim="3", General="Submit"))
+		self.assertEqual(response.status_code, 200)
+
+	def test_post_data_valid_parameters_returns_200_with_parameters_2_4(self):
+		response = app.test_client().post('/dimensional_analysis', data=dict(odim="2", sdim="4", General="Submit"))
+		self.assertEqual(response.status_code, 200)
+
+	def test_post_data_valid_parameters_returns_200_with_parameters_2_6(self):
+		response = app.test_client().post('/dimensional_analysis', data=dict(odim="2", sdim="6", General="Submit"))
+		self.assertEqual(response.status_code, 200)
+
+	def test_post_data_valid_parameters_returns_200_with_parameters_2_7(self):
+		response = app.test_client().post('/dimensional_analysis', data=dict(odim="2", sdim="7", General="Submit"))
+		self.assertEqual(response.status_code, 200)
+
+	def test_post_data_valid_parameters_returns_200_with_parameters_3_8(self):
+		response = app.test_client().post('/dimensional_analysis', data=dict(odim="3", sdim="8", General="Submit"))
+		self.assertEqual(response.status_code, 200)
+
+	def test_post_data_valid_parameters_returns_200_with_parameters_3_5(self):
+		response = app.test_client().post('/dimensional_analysis', data=dict(odim="3", sdim="5", General="Submit"))
+		self.assertEqual(response.status_code, 200)
+
+	def test_post_data_valid_parameters_returns_200_with_parameters_3_6(self):
+		response = app.test_client().post('/dimensional_analysis', data=dict(odim="3", sdim="6", General="Submit"))
+		self.assertEqual(response.status_code, 200)
+
+	def test_post_data_valid_parameters_returns_200_with_parameters_4_6(self):
+		response = app.test_client().post('/dimensional_analysis', data=dict(odim="4", sdim="6", General="Submit"))
+		self.assertEqual(response.status_code, 200)
+
+	def test_post_data_valid_parameters_returns_200_with_parameters_4_7(self):
+		response = app.test_client().post('/dimensional_analysis', data=dict(odim="4", sdim="7", General="Submit"))
+		self.assertEqual(response.status_code, 200)
+
+	def test_post_data_valid_parameters_returns_200_with_parameters_4_8(self):
+		response = app.test_client().post('/dimensional_analysis', data=dict(odim="4", sdim="8", General="Submit"))
+		self.assertEqual(response.status_code, 200)
+
+if __name__ == '__main__':
+	unittest.main()
